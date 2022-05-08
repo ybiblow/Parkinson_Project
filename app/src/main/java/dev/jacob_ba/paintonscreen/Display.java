@@ -29,6 +29,8 @@ public class Display extends View {
     public static int current_brush = Color.BLACK;
     public static boolean isFirstTime = true;
     private float firstTime;
+    public static boolean drawLine = true;
+    private Paint line = new Paint();
 
     public Display(Context context) {
         super(context);
@@ -52,6 +54,14 @@ public class Display extends View {
         paint_brush.setStrokeCap(Paint.Cap.ROUND);
         paint_brush.setStrokeJoin(Paint.Join.ROUND);
         paint_brush.setStrokeWidth(10f);
+
+
+        line.setAntiAlias(true);
+        line.setColor(Color.RED);
+        line.setStyle(Paint.Style.STROKE);
+        line.setStrokeCap(Paint.Cap.ROUND);
+        line.setStrokeJoin(Paint.Join.ROUND);
+        line.setStrokeWidth(10f);
 
         params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
@@ -94,6 +104,10 @@ public class Display extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
+        //if (drawLine == true) {
+            canvas.drawLine(250, 800, 800, 800, line);
+            //drawLine = false;
+        //}
         for (int i = 0; i < pathList.size(); i++) {
             paint_brush.setColor(colorList.get(i));
             canvas.drawPath(pathList.get(i), paint_brush);

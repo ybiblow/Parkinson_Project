@@ -49,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("info", "Size of y array is: " + Display.y_values.size());
                 Log.i("info", "Size of t array is: " + Display.t_values.size());
                 Log.i("info", "last time is: " + Display.t_values.get(Display.t_values.size() - 1));
+                /*Log.i("info", "Displaying X values: ");
+                for (int i = 0; i < Display.x_values.size(); i++) {
+                    Log.i("info", "" + Display.x_values.get(i));
+                }*/
                 Intent intent = new Intent(getApplicationContext(), Graph.class);
                 startActivity(intent);
             }
@@ -73,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
                 Display.x_values.clear();
                 Display.y_values.clear();
                 Display.t_values.clear();
+                Display.drawLine = true;
                 path.reset();
             }
         });

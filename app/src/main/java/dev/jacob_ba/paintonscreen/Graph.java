@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.Entry;
@@ -77,7 +78,7 @@ public class Graph extends AppCompatActivity {
         ArrayList<Entry> waveEntries = new ArrayList<>();
 
         // last element of t_values + 1 will be the size of the wave array
-        int size_of_wave = Display.t_values.get(Display.t_values.size() - 1).intValue() + 1;
+        int size_of_wave = (Display.t_values.get(Display.t_values.size() - 1).intValue() + 1) * 1;
         // array of size "size_of_wave" and all elements are '0'
         ArrayList<Float> wave = new ArrayList<Float>(Collections.nCopies(size_of_wave, 0f));
 
@@ -86,7 +87,7 @@ public class Graph extends AppCompatActivity {
             float x = Display.x_values.get(i);
             float y = Display.y_values.get(i);
             float r = (float) Math.sqrt((float) Math.pow(x, 2) + (float) Math.pow(y, 2));
-            wave.set(Display.t_values.get(i).intValue(), r);
+            wave.set((Display.t_values.get(i).intValue()) * 1, r);
         }
         // sample and hold
         for (int i = 1; i < wave.size(); i++) {
@@ -142,6 +143,38 @@ public class Graph extends AppCompatActivity {
             Log.i("Info", "Magnitude: " + magnitude[i]);
         }
 
+        float deviation = 0;
+        float average = 0;
+        int counter = 0;
+        // calculate last 1/3 averagee
+        for (int i = (magnitude.length / 3) * 2; i < magnitude.length; i++) {
+            average += magnitude[i];
+        }
+        average /= (magnitude.length - (magnitude.length / 3) * 2);
+        // calculate standard deviation of last 1/3
+        for (int i = (magnitude.length / 3) * 2; i < magnitude.length; i++) {
+            deviation += Math.pow(magnitude[i] - average, 2);
+        }
+        deviation /= (magnitude.length - (magnitude.length / 3) * 2);
+        deviation = (float) Math.sqrt(deviation);
+
+        // calculate standard deviation of last 1/3
+        for (int i = (magnitude.length / 3) * 2; i < magnitude.length; i++) {
+            if (magnitude[i] > average + 2.5 * deviation) {
+                counter++;
+                Log.i("info", "Magnitude[" + i + "] = " + magnitude[i]);
+            }
+        }
+        Log.i("info", "Counter = " + counter);
+
+        Log.i("info", "Standard Deviation is:" + deviation);
+        if ((counter > 10 && deviation > 20)) {
+            Log.i("info", "Please see a Doctor! you might have parkinson...");
+            Toast.makeText(this, "Please see a Doctor! you might have parkinson...", Toast.LENGTH_SHORT).show();
+        } else {
+            Log.i("info", "You passed, all is good!");
+            Toast.makeText(this, "You passed, all is good!", Toast.LENGTH_SHORT).show();
+        }
         return waveEntries1;
     }
 
