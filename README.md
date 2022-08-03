@@ -3,5 +3,5 @@ Using DSP knowledge, built a mobile app with the purpose of detecting early susp
 
 ## Photos
 <p align="center">
-<img src="https://github.com/ybiblow/Championship/blob/master/Pics/one.png?raw=true" width="800" height="480">
+<img src="https://github.com/ybiblow/Parkinson_Project/blob/master/Photos/The%20product.png?raw=true" width="800" height="480">
 </p>
